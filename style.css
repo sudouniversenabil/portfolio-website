@@ -545,12 +545,14 @@ body.cursor-hover .cursor {
   background: linear-gradient(135deg, #1a1040, #0e1a3a);
   border: 2px solid rgba(255,255,255,0.1);
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
   position: relative;
   z-index: 2;
   overflow: hidden;
 }
+
+
 
 .avatar-circle::before {
   content: '';

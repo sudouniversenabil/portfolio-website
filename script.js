@@ -103,8 +103,7 @@ const roles = [
   'Full Stack Developer',
   'Backend Engineer',
   'Frontend Enthusiast',
-  'Python Developer',
-  'React Developer',
+  'React NextJs Developer',
 ];
 
 let roleIndex = 0;
