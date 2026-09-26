@@ -1,0 +1,175 @@
+import { assets } from "../assets/pic";
+// import Socials from "./Contact";
+
+const Home = () => {
+  const scrollToSkills = (e) => {
+    e.preventDefault();
+    document.getElementById("skills")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  return (
+    <div
+      id="home"
+      className="flex min-h-screen w-full scroll-mt-24 items-center justify-center px-[5%]"
+    >
+      <style>{`
+        @keyframes slideLSide {
+          from { opacity: 0; transform: translateX(-60px); }
+          to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideRSide {
+          from { opacity: 0; transform: translateX(60px); }
+          to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes popIn {
+          from { opacity: 0; transform: scale(0.85); }
+          to   { opacity: 1; transform: scale(1); }
+        }
+        @keyframes fadeUp {
+          from { opacity: 0; transform: translateY(16px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .home-anim { animation: none !important; opacity: 1 !important; transform: none !important; }
+        }
+      `}</style>
+
+      <div
+        className="
+          relative mx-auto grid w-full max-w-[1150px] grid-cols-1 items-center gap-10
+          overflow-hidden rounded-[28px] border border-[#ff3b57]/20
+          bg-[linear-gradient(135deg,rgba(58,10,18,0.55),rgba(10,2,5,0.75))]
+          p-6 text-[#f6ece8] shadow-[0_30px_80px_-30px_rgba(0,0,0,0.7)]
+          backdrop-blur-2xl
+          md:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] md:p-12
+        "
+      >
+        {/* Top bar: badge + connect button */}
+        <div className="home-anim col-span-full flex items-center justify-between" style={{ animation: "fadeUp 0.7s ease-out both" }}>
+          <span
+            className="
+              inline-flex items-center gap-2 rounded-full border border-[#ff3b57]/40
+              bg-[#ff3b57]/10 px-4 py-2 text-xs font-medium tracking-wide text-[#ff8a97]
+            "
+          >
+            <span className="h-1.5 w-1.5 rounded-full bg-[#ff3b57]" />
+            Full-Stack Developer
+          </span>
+
+          <a
+            href="#skills"
+            onClick={scrollToSkills}
+            className="
+              inline-flex items-center gap-1.5 rounded-full border border-[#f6ece8]/20
+              bg-[#f6ece8]/[0.06] px-4 py-2 text-xs font-medium text-[#f6ece8]
+              transition-all duration-300 hover:border-[#ff3b57]/50 hover:bg-[#ff3b57]/10
+            "
+          >
+            Let's Connect
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        {/* Left: text */}
+        <div
+          className="home-anim flex flex-col items-center gap-5 pt-8 text-center md:items-start md:pt-10 md:text-left"
+          style={{ animation: "slideLSide 0.8s ease-out 0.15s both" }}
+        >
+          <p className="text-sm text-[#b7ada9]">
+            Hey, I'm a
+          </p>
+
+          <h1
+            className="
+              font-['Fraunces',_'Georgia',_serif] text-[clamp(2.4rem,6vw,4rem)]
+              font-semibold leading-[1.05] text-[#f6ece8]
+            "
+          >
+            Full-Stack <span className="text-[#ff3b57]">Developer</span>
+          </h1>
+
+          <p className="max-w-[46ch] text-[clamp(1rem,1.5vw,1.15rem)] text-[#d9cdc9]">
+            Good code should feel <span className="text-[#ff8a97]">invisible</span>.
+          </p>
+
+          <p className="max-w-[52ch] text-[clamp(0.9rem,1.3vw,1rem)] leading-relaxed text-[#b7ada9]">
+            I'm Nabil Shikder, currently sharpening my backend skills with
+            FastAPI while shipping full-stack projects in React, Node.js and
+            MongoDB — clean interfaces, dependable APIs, code that's easy for
+            the next person to read.
+          </p>
+
+          <div className="mt-2 flex flex-wrap items-center justify-center gap-4 md:justify-start">
+            {/* <Socials /> */}
+          </div>
+        </div>
+
+        {/* Right: portrait with floating status cards */}
+        <div
+          className="home-anim relative mx-auto flex w-full max-w-[380px] justify-center md:max-w-none"
+          style={{ animation: "slideRSide 0.8s ease-out 0.15s both" }}
+        >
+          <div
+            className="home-anim relative aspect-[4/5] w-full max-w-[380px]"
+            style={{ animation: "popIn 0.7s ease-out 0.4s both" }}
+          >
+            <div
+              className="
+                absolute -inset-4 rounded-[2rem]
+                bg-[radial-gradient(circle,#ff3b57_0%,transparent_70%)]
+                opacity-60 blur-2xl
+              "
+            />
+            <img
+              src={assets.profile}
+              alt="Nabil Shikder"
+              className="
+                relative h-full w-full rounded-[2rem] object-cover
+                border-4 border-[#f6ece8]/15 shadow-2xl
+                transition-all duration-500 ease-out
+                hover:scale-[1.02] hover:border-[#ff3b57]/60
+              "
+            />
+
+            {/* Status card 1 */}
+            <div
+              className="
+                home-anim absolute left-[-12%] bottom-[18%] rounded-2xl border border-[#f6ece8]/15
+                bg-[#0a0203]/70 px-4 py-3 text-left shadow-xl backdrop-blur-xl
+              "
+              style={{ animation: "fadeUp 0.6s ease-out 0.8s both" }}
+            >
+              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-[#b7ada9]">Status</p>
+              <p className="text-sm font-semibold text-[#f6ece8]">Open to Work</p>
+            </div>
+
+            {/* Status card 2 */}
+            <div
+              className="
+                home-anim absolute right-[-8%] bottom-[2%] rounded-2xl border border-[#f6ece8]/15
+                bg-[#0a0203]/70 px-4 py-3 text-left shadow-xl backdrop-blur-xl
+              "
+              style={{ animation: "fadeUp 0.6s ease-out 0.95s both" }}
+            >
+              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-[#b7ada9]">Based in</p>
+              <p className="text-sm font-semibold text-[#f6ece8]">Bangladesh</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom tag row */}
+        <div
+          className="home-anim col-span-full flex flex-wrap items-center justify-center gap-x-8 gap-y-3 border-t border-[#f6ece8]/10 pt-6 text-xs text-[#b7ada9] md:justify-start"
+          style={{ animation: "fadeUp 0.7s ease-out 0.6s both" }}
+        >
+          <span><span className="text-[#ff3b57]">#01</span> React.js</span>
+          <span><span className="text-[#ff3b57]">#02</span> Node.js</span>
+          <span><span className="text-[#ff3b57]">#03</span> MongoDB</span>
+          <span><span className="text-[#ff3b57]">#04</span> Tailwind CSS</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Home;
