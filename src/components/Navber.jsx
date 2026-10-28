@@ -1,11 +1,9 @@
-
 import { useEffect, useState } from "react";
 
 const items = [
   { label: "Home", id: "home" },
   { label: "About", id: "about" },
-  { label: "Services", id: "services" },
-  { label: "Skill", id: "skills" },
+  { label: "Skills", id: "skills" },
   { label: "Contact", id: "contact" },
 ];
 
@@ -13,90 +11,67 @@ const Navber = () => {
   const [active, setActive] = useState("Home");
 
   useEffect(() => {
-    const sections = items
-      .map((item) => document.getElementById(item.id))
-      .filter(Boolean);
-
-    if (!sections.length) return;
-
-    const observer = new IntersectionObserver(
+    const observedSections = new Set();
+    const sectionObserver = new IntersectionObserver(
       (entries) => {
-        const visibleSection = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort(
-            (a, b) => b.intersectionRatio - a.intersectionRatio
-          )[0];
+        const visibleSections = entries.filter((entry) => entry.isIntersecting);
+        if (visibleSections.length === 0) return;
 
-        if (visibleSection) {
-          const activeItem = items.find(
-            (item) => item.id === visibleSection.target.id
-          );
-
-          if (activeItem) {
-            setActive(activeItem.label);
-          }
-        }
+        const current = visibleSections.reduce((nearest, entry) =>
+          entry.intersectionRatio > nearest.intersectionRatio ? entry : nearest
+        );
+        const item = items.find(({ id }) => id === current.target.id);
+        if (item) setActive(item.label);
       },
-      {
-        rootMargin: "-45% 0px -45% 0px",
-        threshold: 0,
-      }
+      { rootMargin: "-25% 0px -65% 0px" }
     );
 
-    sections.forEach((section) => observer.observe(section));
+    const observeSections = () => {
+      for (const item of items) {
+        const section = document.getElementById(item.id);
+        if (section && !observedSections.has(section)) {
+          sectionObserver.observe(section);
+          observedSections.add(section);
+        }
+      }
+      if (observedSections.size === items.length) {
+        sectionMountObserver.disconnect();
+      }
+    };
 
-    return () => observer.disconnect();
+    const main = document.querySelector("main");
+    const sectionMountObserver = new MutationObserver(observeSections);
+    if (main) {
+      sectionMountObserver.observe(main, { childList: true, subtree: true });
+    }
+    observeSections();
+
+    return () => {
+      sectionMountObserver.disconnect();
+      sectionObserver.disconnect();
+    };
   }, []);
 
-  const goTo = (id, label) => (e) => {
-    e.preventDefault();
-
+  const goTo = (id, label) => (event) => {
+    event.preventDefault();
     setActive(label);
-
     document.getElementById(id)?.scrollIntoView({
-      behavior: "smooth",
+      behavior:
+        window.matchMedia(
+          "(max-width: 767px), (prefers-reduced-motion: reduce)"
+        ).matches
+          ? "auto"
+          : "smooth",
       block: "start",
     });
   };
 
   return (
-    <div
-      className="
-        sticky top-4 z-50 mt-10 w-[92%] max-w-[720px]
-        animate-[slideDown_1s_ease-out]
-        rounded-2xl border border-[#ff5a00]/20
-        bg-[#0d0200]/40 p-3
-        font-medium
-        shadow-[0_0_25px_rgba(255,90,0,0.12)]
-        backdrop-blur-xl
-        transition-[background-color,border-color]
-        duration-700 ease-out
-        hover:bg-[#0d0200]/60
-      "
+    <nav
+      aria-label="Main navigation"
+      className="fixed top-0 z-50 w-full border-b border-cyan-500/30 bg-black/90 font-mono"
     >
-      <style>{`
-        @keyframes navEmberPulse {
-          0%, 100% {
-            box-shadow: 0 0 8px rgba(255, 90, 0, 0.25);
-          }
-
-          50% {
-            box-shadow: 0 0 16px rgba(255, 150, 0, 0.5);
-          }
-        }
-
-        .nav-active-pill {
-          animation: navEmberPulse 2.6s ease-in-out infinite;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .nav-active-pill {
-            animation: none !important;
-          }
-        }
-      `}</style>
-
-      <div className="flex flex-wrap items-center justify-center gap-2">
+      <div className="mx-auto flex min-h-16 w-full max-w-[760px] flex-wrap items-center justify-center gap-2 px-3 py-2">
         {items.map((item) => {
           const isActive = active === item.label;
 
@@ -104,46 +79,26 @@ const Navber = () => {
             <a
               key={item.label}
               href={`#${item.id}`}
+              aria-current={isActive ? "location" : undefined}
               onClick={goTo(item.id, item.label)}
               className={`
-                relative rounded-xl px-4 py-2 text-sm
-                transition-all duration-500 ease-out
-                hover:-translate-y-0.5
-                hover:text-[#ffae66]
+                rounded-sm border px-4 py-2 text-xs tracking-wide
+                transition-colors duration-150
+                sm:text-sm
                 ${
                   isActive
-                    ? "text-[#ffcf9e]"
-                    : "text-[#f6ece8]/85"
+                    ? "border-cyan-500/40 text-cyan-200"
+                    : "border-transparent text-slate-300 hover:text-cyan-100"
                 }
               `}
             >
-              <span className="relative z-10">
-                {item.label}
-              </span>
-
-              <span
-                className={`
-                  absolute inset-0 rounded-xl
-                  border border-[#ff5a00]/40
-                  bg-gradient-to-r
-                  from-[#ff3d00]/20
-                  to-[#ffae00]/20
-                  backdrop-blur-xl
-                  transition-all duration-500 ease-out
-                  ${
-                    isActive
-                      ? "nav-active-pill scale-100 opacity-100"
-                      : "scale-90 opacity-0"
-                  }
-                `}
-              />
+              {item.label}
             </a>
           );
         })}
       </div>
-    </div>
+    </nav>
   );
 };
 
 export default Navber;
-

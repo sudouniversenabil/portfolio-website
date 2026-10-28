@@ -1,3 +1,3 @@
-import profile from './ttt.png'
+import profile from './ttt.webp'
 
 export const assets = {profile}

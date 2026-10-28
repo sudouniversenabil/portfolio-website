@@ -1,27 +1,125 @@
-
 @import "tailwindcss";
 
+@theme {
+  --font-mono: "JetBrains Mono", monospace;
+}
 
-@keyframes slideDown {
+:root {
+  font-family: "JetBrains Mono", monospace;
+  color: #e2faff;
+  background: #03070c;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  background-color: #03070c;
+}
+
+.site-background {
+  background-image:
+    linear-gradient(rgba(103, 232, 249, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(103, 232, 249, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, #03070c, #080f1c 48%, #03070c);
+  background-size: 40px 40px, 40px 40px, 100% 100%;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background: transparent;
+  font-family: "JetBrains Mono", monospace;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+::selection {
+  color: #03070c;
+  background: #67e8f9;
+}
+
+.hud-panel {
+  position: relative;
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  background-color: rgba(3, 7, 12, 0.88);
+}
+
+.hud-panel::before {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    linear-gradient(#22d3ee, #22d3ee) left top / 14px 1px no-repeat,
+    linear-gradient(#22d3ee, #22d3ee) left top / 1px 14px no-repeat,
+    linear-gradient(#22d3ee, #22d3ee) right top / 14px 1px no-repeat,
+    linear-gradient(#22d3ee, #22d3ee) right top / 1px 14px no-repeat,
+    linear-gradient(#22d3ee, #22d3ee) left bottom / 14px 1px no-repeat,
+    linear-gradient(#22d3ee, #22d3ee) left bottom / 1px 14px no-repeat,
+    linear-gradient(#22d3ee, #22d3ee) right bottom / 14px 1px no-repeat,
+    linear-gradient(#22d3ee, #22d3ee) right bottom / 1px 14px no-repeat;
+  content: "";
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.typing-cursor::after {
+  display: inline-block;
+  width: 0.55em;
+  height: 1em;
+  margin-left: 0.12em;
+  background: currentColor;
+  content: "";
+  vertical-align: -0.12em;
+  animation: cursorBlink 1s steps(2, start) infinite;
+}
+
+.reveal-pending {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.reveal-visible {
+  animation: simpleReveal 350ms ease-out both;
+}
+
+@keyframes cursorBlink {
+  to { opacity: 0; }
+}
+
+@keyframes simpleReveal {
   from {
-    transform: translateY(-100%);
     opacity: 0;
+    transform: translateY(12px);
   }
-
   to {
-    transform: translateY(0);
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@keyframes slideRSide {
-  from {
-    transform: translateX(-100%);
-    opacity: 0;
+@media (max-width: 767px), (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 
-  to {
-    transform: translateX(0);
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+
+  .reveal-pending,
+  .reveal-visible {
     opacity: 1;
+    transform: none;
   }
 }
