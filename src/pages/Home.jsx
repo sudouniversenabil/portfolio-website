@@ -153,12 +153,7 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="col-span-full flex flex-wrap items-center justify-center gap-x-8 gap-y-3 border-t border-cyan-500/20 pt-5 font-mono text-xs text-slate-400 md:justify-start">
-          <span><span className="text-cyan-300">#01</span> React.js</span>
-          <span><span className="text-cyan-300">#02</span> Node.js</span>
-          <span><span className="text-cyan-300">#03</span> MongoDB</span>
-          <span><span className="text-cyan-300">#04</span> Tailwind CSS</span>
-        </div>
+
       </div>
     </section>
   );
