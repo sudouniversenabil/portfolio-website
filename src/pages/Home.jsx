@@ -124,13 +124,7 @@ const Home = () => {
           <p className="max-w-[46ch] font-mono text-[clamp(1rem,1.5vw,1.15rem)] text-cyan-50/85">
             I build AI-powered web applications
           </p>
-          <p className="max-w-[54ch] text-sm leading-relaxed text-slate-300/80">
-            I&apos;m Nabil Sikder, a Full-Stack Developer from Bangladesh and an
-            AI Engineer focused on GenAI. I build responsive web experiences
-            with React, Node.js, and practical AI features. I enjoy connecting
-            reliable backend systems with intuitive interfaces and useful LLM
-            workflows.
-          </p>
+
           <p className="font-mono text-xs text-cyan-200/60">
             &gt; initializing portfolio...
           </p>
