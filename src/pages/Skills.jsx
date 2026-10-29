@@ -13,6 +13,7 @@ const skills = [
   { name: "HTML5", icon: "Ht", category: "Frontend" },
   { name: "CSS3", icon: "Cs", category: "Frontend" },
   { name: "JavaScript", icon: "Js", category: "Frontend" },
+  {name:TypeScript,icon:"Ts",category:"Frontend"},
   { name: "React.js", icon: "Re", category: "Frontend" },
   { name: "Next.js", icon: "Nx", category: "Frontend" },
   { name: "Tailwind CSS", icon: "Tw", category: "Frontend" },
